@@ -4,16 +4,13 @@ This example illustrates how to do the image classification with pre-trained mod
 You can download Analytics Zoo prebuilt release and nightly build package from [here](https://analytics-zoo.github.io/master/#release-download/) and extract it.
 
 ## Run steps
-1. Prepare pre-trained models
-
+### Prepare pre-trained models
 Download pre-trained models from [Image Classification](https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ProgrammingGuide/image-classification.md)
 
-2. Prepare predict dataset
-
+### Prepare predict dataset
 Put your image data for prediction in one folder.
 
-3. Run the example
-
+### Run the example
 Run the following command for Spark local mode (MASTER=local[*]) or cluster mode:
 ```bash
 export SPARK_HOME=the root directory of Spark
