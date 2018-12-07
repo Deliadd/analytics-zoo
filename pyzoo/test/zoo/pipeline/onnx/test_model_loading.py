@@ -1176,3 +1176,27 @@ class TestModelLoading(OnnxTestCase):
         reduced = np.sum(data, axis=tuple(axes), keepdims=keepdims == 1)
         output = OnnxLoader.run_node(node, [data])
         np.testing.assert_almost_equal(output["reduced"], reduced, decimal=5)
+
+    def test_onnx_max(self):
+        class Max(torch.nn.Module):
+            def forward(self, x):
+                return torch.max(x)
+
+        pytorch_model = torch.nn.Sequential(
+            Max()
+        )
+        input_shape_with_batch = (20, 10, 5)
+        self.compare_with_pytorch(pytorch_model, input_shape_with_batch)
+
+    def test_max_3(self):
+        data_0 = np.array([3, 2, 1]).astype(np.float32)
+        data_1 = np.array([1, 4, 4]).astype(np.float32)
+        data_2 = np.array([2, 5, 3]).astype(np.float32)
+        result = np.array([3, 5, 4]).astype(np.float32)
+        node = onnx.helper.make_node(
+            'Max',
+            inputs=['data_0', 'data_1', 'data_2'],
+            outputs=['result'],
+        )
+        output = OnnxLoader.run_node(node, [data_0, data_1, data_2])
+        np.testing.assert_almost_equal(output["result"], result, decimal=5)
